@@ -1,4 +1,4 @@
-# Muni-demo
+# Muni-demo plus
 
 Our solution aims to help individuals identify and understand their 
 underlying emotions, which can be a crucial step in managing mental health conditions. 
