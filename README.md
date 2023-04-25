@@ -12,3 +12,9 @@ a demo for the Muni App. Unfortunately, a demo version of Muni has limited featu
 available
 
 To access the demo, you can proceed to this link: muni.app/demo
+
+
+The app features a language transformer from HuggingFace. It is can classify 
+7 emotions based from text input (anger, disgust, fear, joy, neutral, sadness, and surprise).
+
+Jochen Hartmann, "Emotion English DistilRoBERTa-base". https://huggingface.co/j-hartmann/emotion-english-distilroberta-base/, 2022.
