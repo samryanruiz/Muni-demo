@@ -19,8 +19,11 @@ def classifier():
 async def predict():
     text = request.form.get('input_text')
     data = {"inputs": text}
-    response = requests.post(API_URL, headers=headers, json=data)
-    results = response.json()
+    try:
+        response = requests.post(API_URL, headers=headers, json=data)
+        results = response.json()
+    except:
+        print("Entry is empty")
     results = results[0][0]
     label = results['label']
     score = results['score']

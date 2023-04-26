@@ -51,6 +51,7 @@
             align-items: center;
             height: 100vh;
             padding: 0%;
+            z-index: 1;
         }
 
         .word-count {
@@ -150,6 +151,11 @@
             animation: loading 1s ease infinite
        }
 
+       .hidden {
+            opacity: 0;
+       }
+
+
        @keyframes loading {
             from { transform: rotate(0turn) }
             to { transform: rotate(1turn) }
@@ -159,7 +165,7 @@
 
 <body>
     <div class="loader"></div>
-        <div class="container">
+        <div class="container" id="main-div">
             <div class="header">
                 <img src="static/logo.png" alt="Muni Emotion Classifier Logo" class="logo">
                 <h1 class=" title">Muni's Demo <br>Emotion Classifier</h1>
@@ -178,28 +184,30 @@
                 </div>
                 
             </div>
-        </div>
         <div class="footerContent">
             <p style="bottom: 10%;">Developed by students from Technological Institute of the Philippines - Quezon City</p>
         </div>
+    </div>
 
     <script>
-        window.addEventListener("load", () => {
-            const loader = 
-
-            document.querySelector(".loader").classList.add("loader--hidden");
-            document.querySelector(".loader").addEventListener("transitioned", () => {
-                document.body.removeChild(document.querySelector(".loader"));
-            })
-        })
+        
         // JavaScript code to handle the form submission and update the result in real-time
         const form = document.querySelector('form');
         const resultContainer = document.querySelector('#result-container');
         const clearBtn = document.querySelector('#clear-btn')
         const inputText = document.querySelector('#input_text');
         const wordCount = document.querySelector('.word-count');
-
+        const loader = document.querySelector(".loader")
+        // const loader2 = document.querySelector('.loader2');
         const maxChars = 1000;
+
+        window.addEventListener("load", () => {
+
+            loader.classList.add("loader--hidden");
+            loader.addEventListener("transitioned", () => {
+                document.body.removeChild(loader);
+            })
+        })
 
         inputText.addEventListener('input', async (e) => {
             e.preventDefault();
@@ -211,12 +219,18 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // const container = document.querySelector('#my-div')
             const formData = new FormData(form);
+
+            // container.classList.add('hidden')
+
             const response = await fetch('/classifier/predict', {
                 method: 'POST',
                 body: formData
             });
 
+            // container.classList.remove('hidden')
             const data = await response.json();
 
             // update the result container with the prediction result
@@ -225,6 +239,7 @@
                 <p>Prediction: ${label}</p>
                 <p>Score: ${score}%</p>
             `;
+
 
             if (label == 'anger') {
                 window.location.href = '/anger?score=' + score;
@@ -243,10 +258,8 @@
             } else {
                 window.location.href = '/classifier';
             }
-
-
-
         });
+
 
         clearBtn.addEventListener('click', () => {
             // reset the form and clear the result container
